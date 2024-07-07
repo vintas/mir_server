@@ -2,7 +2,7 @@
 Mir Server
 
 # Install
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 # Run
-python manage.py runserver
+`python manage.py runserver`
