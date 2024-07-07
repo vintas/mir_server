@@ -13,8 +13,8 @@ class dependency_version(models.Model):
     version = models.CharField(max_length=200)
     pub_date = models.DateTimeField("date published")
 
-    # def __str__(self):
-    #     return (self.dependency. + self.version)
+    def __str__(self):
+        return str(self.dependency) + " v" + self.version
 
 class package(models.Model):
     name = models.CharField(max_length=200)
@@ -22,9 +22,12 @@ class package(models.Model):
     pub_date = models.DateTimeField("date published")
 
     def __str__(self):
-        return self.name
+        return self.name + " v" + self.version
 
 class package_dependency(models.Model):
     package = models.ForeignKey(package, on_delete=models.CASCADE)
     dependency_version = models.ForeignKey(dependency_version, on_delete=models.CASCADE)
     pub_date = models.DateTimeField("date published")
+
+    def __str__(self):
+        return str(self.package) + " depends on " + str(self.dependency_version)
