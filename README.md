@@ -7,5 +7,10 @@ Mir Server
 # Install
 `pip install -r requirements.txt`
 
+# Database setup
+
+`python manage.py makemigrations`
+`python manage.py migrate`
+
 # Run
 `python manage.py runserver`
