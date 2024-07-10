@@ -14,10 +14,11 @@ class DependencySerializer(serializers.Serializer):
 class PackageSerializer(serializers.ModelSerializer):
     dependencies = serializers.SerializerMethodField()
     file_url = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ['name', 'version', 'description', 'date_added', 'dependencies', 'file_url']
+        fields = ['name', 'version', 'description', 'dependencies', 'type', 'file_url']
 
     def get_dependencies(self, obj):
         dependencies = []
@@ -43,13 +44,17 @@ class PackageSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(obj.file.url)
         return None
 
+    def get_type(self, obj):
+        return 'package'
+
 class LibraryWithDependenciesSerializer(serializers.ModelSerializer):
     dependencies = serializers.SerializerMethodField()
     file_url = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
 
     class Meta:
         model = Library
-        fields = ['name', 'version', 'dependencies', 'file_url']
+        fields = ['name', 'version', 'dependencies', 'type', 'file_url']
 
     def get_dependencies(self, obj):
         dependencies = []
@@ -67,3 +72,6 @@ class LibraryWithDependenciesSerializer(serializers.ModelSerializer):
         if obj.file:
             return request.build_absolute_uri(obj.file.url)
         return None
+
+    def get_type(self, obj):
+        return 'library'

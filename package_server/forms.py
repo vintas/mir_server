@@ -16,7 +16,7 @@ class PackageForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'version': forms.TextInput(attrs={'class': 'form-control'}),
             'libraries': forms.SelectMultiple(attrs={'class': 'form-control'}),
-            'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'file': forms.ClearableFileInput(attrs={'class': 'form-control', 'required': True}),
             'dependencies': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
@@ -30,6 +30,6 @@ class LibraryForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'version': forms.TextInput(attrs={'class': 'form-control'}),
-            'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'file': forms.ClearableFileInput(attrs={'class': 'form-control', 'required': True}),
             'dependencies': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
