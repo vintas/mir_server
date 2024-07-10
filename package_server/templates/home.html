@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Welcome, {{ request.user.username }}</h2>
+    <div class="d-flex justify-content-between mb-3">
+        <h3>Your Packages</h3>
+        <a href="{% url 'logout_page' %}" class="btn btn-danger">Logout</a>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date Added</th>
+                <th>Libraries</th>
+                <th>Package File</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for package in packages %}
+            <tr>
+                <td>{{ package.name }}</td>
+                <td>{{ package.description }}</td>
+                <td>{{ package.date_added }}</td>
+                <td>
+                    {% for library in package.libraries.all %}
+                        {{ library.name }} ({{ library.version }})<br>
+                    {% empty %}
+                        No libraries
+                    {% endfor %}
+                </td>
+                <td>
+                    {% if package.file %}
+                        <a href="{{ package.file.url }}" download>Download</a>
+                    {% else %}
+                        No file
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'add_package' %}" class="btn btn-primary">Add New Package</a>
+</div>
+</body>
+</html>

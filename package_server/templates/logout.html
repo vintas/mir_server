@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Logout</h2>
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <p>Are you sure you want to log out?</p>
+        <button type="submit" class="btn btn-danger">Logout</button>
+    </form>
+</div>
+</body>
+</html>
