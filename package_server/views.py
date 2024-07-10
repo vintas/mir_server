@@ -54,11 +54,13 @@ def add_package_view(request):
         form = PackageForm()
     return render(request, 'add_package.html', {'form': form})
 
+@login_required
 def add_library_view(request):
     if request.method == 'POST':
         form = LibraryForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            form.save_m2m()  # Save many-to-many relationships
             return redirect('add_package')  # Redirect to add package page after adding a library
     else:
         form = LibraryForm()

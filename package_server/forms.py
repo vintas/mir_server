@@ -26,9 +26,10 @@ class PackageForm(forms.ModelForm):
 class LibraryForm(forms.ModelForm):
     class Meta:
         model = Library
-        fields = ['name', 'version', 'file']
+        fields = ['name', 'version', 'file', 'dependencies']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'version': forms.TextInput(attrs={'class': 'form-control'}),
             'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'dependencies': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
