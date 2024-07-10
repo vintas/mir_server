@@ -6,6 +6,7 @@ class Library(models.Model):
     name = models.CharField(max_length=100)
     version = models.CharField(max_length=50, validators=[validate_semver])
     file = models.FileField(upload_to='library_files/', blank=True, null=True)
+    dependencies = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='dependent_libraries')
 
     def __str__(self):
         return f"{self.name} ({self.version})"

@@ -12,7 +12,7 @@ from .forms import PackageForm, LibraryForm
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import PackageSerializer
+from .serializers import PackageSerializer, LibraryWithDependenciesSerializer
 from packaging.version import Version, InvalidVersion
 
 def login_view(request):
@@ -81,3 +81,41 @@ def package_detail_view(request, name, version=None):
 
     serializer = PackageSerializer(package, context={'request': request})
     return Response(serializer.data)
+
+@api_view(['GET'])
+def item_detail_view(request, name, version=None):
+    def get_latest_version(items):
+        return max(items, key=lambda i: Version(i.version))
+    
+    try:
+        package = None
+        library = None
+        
+        if version:
+            try:
+                package = Package.objects.get(name=name, version=version)
+            except Package.DoesNotExist:
+                pass
+            try:
+                library = Library.objects.get(name=name, version=version)
+            except Library.DoesNotExist:
+                pass
+        else:
+            packages = Package.objects.filter(name=name)
+            libraries = Library.objects.filter(name=name)
+            if packages:
+                package = get_latest_version(packages)
+            if libraries:
+                library = get_latest_version(libraries)
+        
+        if package:
+            serializer = PackageSerializer(package, context={'request': request})
+            return Response(serializer.data)
+        elif library:
+            serializer = LibraryWithDependenciesSerializer(library, context={'request': request})
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Item not found'}, status=404)
+    
+    except InvalidVersion:
+        return Response({'error': 'Invalid version format'}, status=400)

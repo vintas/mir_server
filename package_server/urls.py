@@ -13,4 +13,6 @@ urlpatterns=[
   path('logout_page/', lambda request: render(request, 'logout.html'), name='logout_page'),
   path('api/package/<str:name>/', views.package_detail_view, name='package_detail_no_version'),
   path('api/package/<str:name>/<str:version>/', views.package_detail_view, name='package_detail_with_version'),
+  path('api/item/<str:name>/', views.item_detail_view, name='item_detail_no_version'),
+  path('api/item/<str:name>/<str:version>/', views.item_detail_view, name='item_detail_with_version'),
 ]
