@@ -15,9 +15,11 @@
         <thead>
             <tr>
                 <th>Name</th>
+                <th>Version</th>
                 <th>Description</th>
                 <th>Date Added</th>
                 <th>Libraries</th>
+                <th>Dependencies</th>
                 <th>Package File</th>
             </tr>
         </thead>
@@ -25,6 +27,7 @@
             {% for package in packages %}
             <tr>
                 <td>{{ package.name }}</td>
+                <td>{{ package.version }}</td>
                 <td>{{ package.description }}</td>
                 <td>{{ package.date_added }}</td>
                 <td>
@@ -32,6 +35,13 @@
                         {{ library.name }} ({{ library.version }})<br>
                     {% empty %}
                         No libraries
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for dependency in package.dependencies.all %}
+                        {{ dependency.name }} ({{ dependency.version }})<br>
+                    {% empty %}
+                        No dependencies
                     {% endfor %}
                 </td>
                 <td>

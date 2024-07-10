@@ -8,11 +8,15 @@ class LibrarySerializer(serializers.ModelSerializer):
 
 class PackageSerializer(serializers.ModelSerializer):
     libraries = LibrarySerializer(many=True)
+    dependencies = serializers.SerializerMethodField()
     file_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ['name', 'description', 'date_added', 'libraries', 'file_url']
+        fields = ['name', 'version', 'description', 'date_added', 'libraries', 'dependencies', 'file_url']
+
+    def get_dependencies(self, obj):
+        return PackageSerializer(obj.dependencies.all(), many=True, context=self.context).data
 
     def get_file_url(self, obj):
         request = self.context.get('request')

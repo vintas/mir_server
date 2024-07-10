@@ -9,13 +9,15 @@ class LoginForm(AuthenticationForm):
 class PackageForm(forms.ModelForm):
     class Meta:
         model = Package
-        fields = ['name', 'description','version', 'libraries', 'file']
+        fields = ['name', 'version', 'description','version', 'libraries', 'file', 'dependencies']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'version': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
             'version': forms.TextInput(attrs={'class': 'form-control'}),
             'libraries': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'file': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'dependencies': forms.SelectMultiple(attrs={'class': 'form-control'}),
         }
 
     # Adding read-only date_added field for display purposes
