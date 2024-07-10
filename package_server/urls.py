@@ -11,5 +11,6 @@ urlpatterns=[
   path('add-library/', views.add_library_view, name='add_library'),
   path('logout/', auth_views.LogoutView.as_view(), name='logout'),
   path('logout_page/', lambda request: render(request, 'logout.html'), name='logout_page'),
-  path('api/package/<str:name>/', views.package_detail_view, name='package_detail'),
+  path('api/package/<str:name>/', views.package_detail_view, name='package_detail_no_version'),
+  path('api/package/<str:name>/<str:version>/', views.package_detail_view, name='package_detail_with_version'),
 ]

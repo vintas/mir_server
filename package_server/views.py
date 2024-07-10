@@ -13,6 +13,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .serializers import PackageSerializer
+from packaging.version import Version, InvalidVersion
 
 def login_view(request):
     if request.method == "POST":
@@ -64,11 +65,19 @@ def add_library_view(request):
     return render(request, 'add_library.html', {'form': form})
 
 @api_view(['GET'])
-def package_detail_view(request, name):
+def package_detail_view(request, name, version=None):
     try:
-        package = Package.objects.get(name=name)
+        if version:
+            package = Package.objects.get(name=name, version=version)
+        else:
+            packages = Package.objects.filter(name=name)
+            if not packages:
+                raise Package.DoesNotExist
+            package = max(packages, key=lambda p: Version(p.version))
     except Package.DoesNotExist:
         return Response({'error': 'Package not found'}, status=404)
+    except InvalidVersion:
+        return Response({'error': 'Invalid version format'}, status=400)
 
     serializer = PackageSerializer(package, context={'request': request})
     return Response(serializer.data)
