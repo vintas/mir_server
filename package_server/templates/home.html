@@ -1,11 +1,18 @@
-<!DOCTYPE html>
+
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container"> -->
+    {% extends "base.html" %}
+
+    {% block title %}Home{% endblock %}
+    
+    {% block content %}
+
     <h2>Welcome, {{ request.user.username }}</h2>
     <div class="d-flex justify-content-between mb-3">
         <h3>Your Packages</h3>
@@ -84,6 +91,8 @@
       </tbody>
     </table>
     <a href="{% url 'add_library' %}" class="btn btn-primary">Add New Library</a>
-  </div>
+    {% endblock %}
+
+  <!-- </div>
 </body>
-</html>
+</html> -->

@@ -1,17 +1,25 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Add Library</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container"> -->
+    {% extends "base.html" %}
+
+    {% block title %}Add Package{% endblock %}
+    
+    {% block content %}
+
     <h2>Add New Library</h2>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Add Library</button>
     </form>
-</div>
+    {% endblock %}
+
+<!-- </div>
 </body>
-</html>
+</html> -->
