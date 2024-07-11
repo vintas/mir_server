@@ -20,6 +20,7 @@ class Package(models.Model):
     libraries = models.ManyToManyField(Library, blank=True)
     file = models.FileField(upload_to='package_files/', blank=False, null=False)
     dependencies = models.ManyToManyField('self', symmetrical=False, blank=True, related_name='dependent_packages')
+    setup_script = models.FileField(upload_to='shell_scripts/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.version})"

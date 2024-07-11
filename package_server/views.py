@@ -38,7 +38,8 @@ def login_view(request):
 @login_required
 def home_view(request):
     packages = Package.objects.filter(user=request.user)
-    return render(request, 'home.html', {'packages': packages})
+    libraries = Library.objects.filter()
+    return render(request, 'home.html', {'packages': packages, 'libraries': libraries})
 
 @login_required
 def add_package_view(request):

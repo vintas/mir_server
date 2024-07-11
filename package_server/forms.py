@@ -18,6 +18,7 @@ class PackageForm(forms.ModelForm):
             'libraries': forms.SelectMultiple(attrs={'class': 'form-control'}),
             'file': forms.ClearableFileInput(attrs={'class': 'form-control', 'required': True}),
             'dependencies': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'shell_script': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 
     # Adding read-only date_added field for display purposes

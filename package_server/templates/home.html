@@ -21,6 +21,7 @@
                 <th>Libraries</th>
                 <th>Dependencies</th>
                 <th>Package File</th>
+                <th>Shell Script</th>
             </tr>
         </thead>
         <tbody>
@@ -51,11 +52,38 @@
                         No file
                     {% endif %}
                 </td>
+                <td>{% if package.setup_script %}<a href="{{ package.setup_script.url }}">Download Script</a>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <a href="{% url 'add_package' %}" class="btn btn-primary">Add New Package</a>
-</div>
+    <h3>Your Libraries</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Version</th>
+          <th>File</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for library in libraries %}
+        <tr>
+          <td>{{ library.name }}</td>
+          <td>{{ library.version }}</td>
+          <td>
+          {% if library.file %}
+          <a href="{{ library.file.url }}">Download</a>
+          {% else %}
+          No file
+          {% endif %}
+        </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'add_library' %}" class="btn btn-primary">Add New Library</a>
+  </div>
 </body>
 </html>
