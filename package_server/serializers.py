@@ -24,10 +24,15 @@ class PackageSerializer(serializers.ModelSerializer):
         dependencies = []
         # Add library dependencies
         for library in obj.libraries.all():
+            item_type = 'library'
+            if 'conf' in library.name or 'pem' in library.name:
+                item_type = 'config'
+            else:
+                item_type = 'library'
             dependencies.append({
                 'name': library.name,
                 'version': library.version,
-                'type': 'library'
+                'type': item_type
             })
         # Add package dependencies
         for dependency in obj.dependencies.all():
@@ -60,10 +65,15 @@ class LibraryWithDependenciesSerializer(serializers.ModelSerializer):
         dependencies = []
         # Add library dependencies
         for library in obj.dependencies.all():
+            item_type = 'library'
+            if 'conf' in library.name or 'pem' in library.name:
+                item_type = 'config'
+            else:
+                item_type = 'library'
             dependencies.append({
                 'name': library.name,
                 'version': library.version,
-                'type': 'library'
+                'type': item_type
             })
         return dependencies
 
@@ -74,4 +84,7 @@ class LibraryWithDependenciesSerializer(serializers.ModelSerializer):
         return None
 
     def get_type(self, obj):
+        print(obj)
+        if 'conf' in obj.name or 'pem' in obj.name:
+            return 'config'
         return 'library'
